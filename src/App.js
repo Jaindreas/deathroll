@@ -5,31 +5,48 @@ import './App.css';
 
 class App extends React.Component {
    state = {
-      userScores : [
-        {score: 0},
-      ],
+      score1: 0,
+      score2: 0,
       winner: "No Winner ",
-      buttonToggle: "enabled"
+      buttonToggle1: "enabled",
+      buttonToggle2: "enabled"
   }
-  generateRandomNumber = () => {
+  generateRandomNumber = (player) => {
     let randomNumber = Math.round(Math.random() * 100);
+    if (player === 1) {
     this.setState({
-      userScores : [
-        {score: randomNumber}
-      ],
-        buttonToggle: '' 
-    }) 
+      score1: 1,
+        buttonToggle1: '' 
+    })
+  } else {
+    this.setState({
+      score2: 2,
+        buttonToggle2: '' 
+    })
+  }
 }
-  
+
+// decideWinner = () => {
+//   if ((this.state.userScores[0].score) > (this.state.userScores[0].score)) {
+//       this.setState({
+//           winner: "Player 1"
+//       })
+//   } else {
+//       this.setState({
+//           winner: "Player 2"
+//       })
+//   }
+// }
   render() {
   return (
     <div className="App">
       <h1> <u> Death Roll</u> </h1>
       <h4> Player 1 </h4>
-      <NumberGenerator userscores = {this.state.userScores[0].score} buttontoggle = {this.state.buttonToggle} generate = {this.generateRandomNumber} />
+      <NumberGenerator userscores = {this.state.score1} generate = {() => this.generateRandomNumber(1)} buttontoggle = {this.state.buttonToggle1}  />
       <h4> Player 2 </h4>
-      <NumberGenerator userscores = {this.state.userScores[0].score} buttontoggle = {this.state.buttonToggle} generate = {this.generateRandomNumber} />
-      <ScoreCard number = {this.state.userScores[0].score} />
+      <NumberGenerator userscores = {this.state.score2} generate = {() => this.generateRandomNumber(2)} buttontoggle = {this.state.buttonToggle2}  /> 
+      <ScoreCard number = {this.state.score1} />
+      <h4> Winner is {this.state.winner}</h4>
     </div>
   );
   }
